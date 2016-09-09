@@ -1,0 +1,8 @@
+hugo-from-git:
+  build: .
+  ports:
+    - "127.0.0.1:80:80"
+  environment:
+    - CONFIG_FILE=config_en.toml
+    - PERIOD=1
+    - REPO_LINK=https://github.com/Lerenn/louis-fradin.net.git

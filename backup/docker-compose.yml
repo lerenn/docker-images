@@ -1,0 +1,6 @@
+backup:
+  build: .
+  environment:
+    - BACKUP_DIR=root@fr.louis-fradin.net:/etc
+  volumes:
+    - /home/lerenn/.ssh:/keys:z
