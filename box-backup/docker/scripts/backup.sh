@@ -6,6 +6,11 @@ ARCHIVE_DIR=/var/archives
 ARCHIVE_NAME=backup_${NOW}.tar.gz
 BOX_ADDRESS=https://dav.box.com/dav
 
+# Get others variables
+. /docker/data/vars.sh
+
+echo "#--------------# Start Backup #--------------#"
+
 # Compress data
 ################################################################################
 echo "### Compress data"
@@ -30,3 +35,8 @@ cadaver ${BOX_ADDRESS} <<EOF
 mkcol ${DESTINATION_FOLDER}
 put ${ARCHIVE_DIR}/${ARCHIVE_NAME} ${DESTINATION_FOLDER}/${ARCHIVE_NAME}
 EOF
+
+# Clean
+rm -rf /var/archives/*
+
+echo "#--------------# End Backup #--------------#"
