@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Variables
-NOW=`date +%Y%m%d_%H%M%S`
+NOW=`date +%Y%m%d-%H%M%S`
 ARCHIVE_DIR=/var/archives
-ARCHIVE_NAME=backup_${NOW}.tar.gz
+ARCHIVE_NAME=backup-${NOW}.tar.gz
 BOX_ADDRESS=https://dav.box.com/dav
 
 # Get others variables
@@ -36,7 +36,42 @@ mkcol ${DESTINATION_FOLDER}
 put ${ARCHIVE_DIR}/${ARCHIVE_NAME} ${DESTINATION_FOLDER}/${ARCHIVE_NAME}
 EOF
 
+# Delete old backups
+################################################################################
+if [[ $BACKUP_NBR > 0 ]]; then
+  echo "### Delete oldest backups"
+
+  # Get list of files
+INFOS=`cadaver ${BOX_ADDRESS} <<EOF
+ls ${DESTINATION_FOLDER}
+EOF`
+
+  # Clean list of files
+  test='\bbackup\-[[:alpha:]]*\b'
+  files=(`echo $INFOS | tr '[[:space:]]' '\n' | grep "^$test"`)
+
+  # Get files to delete
+  i=0
+  NBR_FILES=${#files[@]}
+  FILES_TO_DELETE=()
+  for var in "${files[@]}"; do
+    if [[ $(( NBR_FILES - i )) > $BACKUP_NBR ]]; then
+      FILES_TO_DELETE+=($var)
+    fi
+    i=$((i+1))
+  done
+  echo "Files to delete : ${FILES_TO_DELETE[@]}"
+
+  # Delete oldest files
+  for var in "${FILES_TO_DELETE[@]}"; do
+cadaver ${BOX_ADDRESS} <<EOF
+delete ${DESTINATION_FOLDER}/${var}
+EOF
+  done
+fi
+
 # Clean
+################################################################################
 rm -rf /var/archives/*
 
 echo "#--------------# End Backup #--------------#"
