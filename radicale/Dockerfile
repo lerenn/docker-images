@@ -2,8 +2,8 @@ FROM debian:jessie
 MAINTAINER Louis Fradin <louis.fradin@gmail.com>
 
 # Install pre-requis
-RUN apt-get update && apt-get upgrade
-RUN apt-get install python2.7 python-pip -y
+RUN apt-get update && \
+    apt-get install python2.7 python-pip -y
 
 # Install radicale
 RUN pip install radicale
