@@ -1,2 +1,2 @@
 # docker-images
-Repository for docker images
+Personal repository for docker images
