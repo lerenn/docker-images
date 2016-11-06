@@ -6,7 +6,7 @@ RUN echo "deb http://ftp.debian.org/debian jessie-backports main" > /etc/apt/sou
 RUN apt-get update
 
 # Install certbot and nginx
-RUN apt-get install -y cron nginx dnsmasq
+RUN apt-get install -y nginx dnsmasq
 RUN apt-get install -y certbot -t jessie-backports
 
 # Copy files
@@ -18,6 +18,12 @@ RUN cp /docker/config/nginx.conf /etc/nginx/ && \
 
 # Volumes
 VOLUME /etc/nginx/sites-enabled
+VOLUME /etc/letsencrypt
+
+# Environment variables
+ENV LETSENCRYPT_EMAIL none
+ENV RSA_KEY_SIZE 4096
+ENV STARTUP_WAIT 0
 
 # Command
 CMD ["bash", "/docker/scripts/entrypoint.sh" ]
