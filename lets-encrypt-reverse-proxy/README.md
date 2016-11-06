@@ -52,6 +52,16 @@ To **avoid certificate regeneration** at each container creation, please conside
 
 For more informations: https://letsencrypt.org/docs/rate-limits/.
 
+### Use of certificates
+
+After the generation of the certificates, you can find them at `/etc/letsencrypt/live/<domain>`.
+The certificate will be generated as `fullchain.pem` and the private key as `privkey.pem`.
+Every subdomain is registered within the same certificate.
+
+For `example.com`, you'll find the :
+* Certificate at `/etc/letsencrypt/live/example.com/fullchain.pem`
+* Private key at `/etc/letsencrypt/live/example.com/privkey.pem`
+
 ### Support
 
 If you like Let's Encrypt, please consider making a donation at https://letsencrypt.org/donate/.
