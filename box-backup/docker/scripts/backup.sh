@@ -3,38 +3,62 @@
 # Variables
 NOW=`date +%Y%m%d-%H%M%S`
 ARCHIVE_DIR=/var/archives
-ARCHIVE_NAME=backup-${NOW}.tar.gz
+ARCHIVE_NAME="backup-${NOW}.tar.gz"
 BOX_ADDRESS=https://dav.box.com/dav
+BACKUP_DIR="backup-${NOW}"
 
 # Get others variables
 . /docker/data/vars.sh
 
 echo "#--------------# Start Backup #--------------#"
 
-# Compress data
+# Prepare data
 ################################################################################
-echo "### Compress data"
-tar -czf ${ARCHIVE_DIR}/${ARCHIVE_NAME} /data
 
-# Encrypt (if enabled)
-################################################################################
-if [ ${ENCRYPTION} ]; then
-  echo "### Encryption"
-
-  # Encryption
-  echo ${ENCRYPTION_PASSWORD} | gpg --quiet --passphrase-fd 0 --command-fd 0 --status-fd 1 --no-tty --yes -o ${ARCHIVE_DIR}/${ARCHIVE_NAME}.gpg -c ${ARCHIVE_DIR}/${ARCHIVE_NAME}
-
-  # Change archive name
-  ARCHIVE_NAME=${ARCHIVE_NAME}.gpg
+echo "### Prepare data"
+if [ ${ENCRYPTION} == true ] && [ ${SPLIT} == true ]; then
+  echo "Encryption and split activated"
+  ARCHIVE_NAME="${ARCHIVE_NAME}.gpg.part-"
+  tar -czf - /data | gpg -c --passphrase "${ENCRYPTION_PASSWORD}" | split -b ${SPLIT_SIZE} - "${ARCHIVE_DIR}/${ARCHIVE_NAME}"
+elif [ ${ENCRYPTION} == true ]; then
+  echo "Encryption activated"
+  ARCHIVE_NAME="${ARCHIVE_NAME}.gpg"
+  tar -czf - /data | gpg -c --passphrase "${ENCRYPTION_PASSWORD}" -o "${ARCHIVE_DIR}/${ARCHIVE_NAME}"
+elif [ ${SPLIT} == true ]; then
+  echo "Split activated"
+  ARCHIVE_NAME="${ARCHIVE_NAME}.part-"
+  tar -czf - /data | split -b ${SPLIT_SIZE} - "${ARCHIVE_DIR}/${ARCHIVE_NAME}"
+else
+  echo "No supplement treatment activated"
+  tar -czf "${ARCHIVE_DIR}/${ARCHIVE_NAME}" /data
 fi
+
+ARCHIVE_DATA=`ls "${ARCHIVE_DIR}"`
+echo "Created files:"
+echo "${ARCHIVE_DATA}"
 
 # Send data
 ################################################################################
-echo "### Transfert data"
-cadaver ${BOX_ADDRESS} <<EOF
-mkcol ${DESTINATION_FOLDER}
-put ${ARCHIVE_DIR}/${ARCHIVE_NAME} ${DESTINATION_FOLDER}/${ARCHIVE_NAME}
+echo "### Transfert data to ${DESTINATION_FOLDER}/${BACKUP_DIR}"
+
+# Create directories
+path=""
+directories=$(echo "${DESTINATION_FOLDER}/${BACKUP_DIR}" | tr "/" "\n")
+for dir in ${directories}
+do
+  path="${path}${dir}/"
+  cadaver ${BOX_ADDRESS} <<EOF
+mkcol ${path}
 EOF
+done
+
+# Transfer data
+for file in ${ARCHIVE_DATA}
+do
+  cadaver ${BOX_ADDRESS} <<EOF
+put ${ARCHIVE_DIR}/${file} ${DESTINATION_FOLDER}/${BACKUP_DIR}/${file}
+EOF
+done
 
 # Delete old backups
 ################################################################################
@@ -65,7 +89,7 @@ EOF`
   # Delete oldest files
   for var in "${FILES_TO_DELETE[@]}"; do
 cadaver ${BOX_ADDRESS} <<EOF
-delete ${DESTINATION_FOLDER}/${var}
+rmcol ${DESTINATION_FOLDER}/${var}
 EOF
   done
 fi
