@@ -17,6 +17,7 @@ RUN chmod +x /start.sh
 # Environment variables
 ENV USERNAME admin
 ENV PASSWORD admin
+ENV SUDO yes
 
 EXPOSE 22
 CMD /start.sh

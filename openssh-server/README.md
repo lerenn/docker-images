@@ -20,6 +20,7 @@ Start your image :
 
 * **USERNAME**: Username of the user. Defaults to `admin`.
 * **PASSWORD**: Password of the user. Defaults to `admin`.
+* **SUDO**: Add user to `sudo` users. Defaults to `yes`.
 
 ###Ports
 

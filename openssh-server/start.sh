@@ -3,7 +3,11 @@
 # Add the user to ssh
 encryptedPassword=`mkpasswd --method=SHA-512 $PASSWORD`
 useradd -m -s /bin/bash -p $encryptedPassword $USERNAME
-adduser $USERNAME sudo
+
+# Add as sudo user
+if [ "$SUDO" == "yes" ]; then
+  adduser $USERNAME sudo
+fi
 
 # Create the PrivSep empty dir if necessary
 if [ ! -d /var/run/sshd ]; then
