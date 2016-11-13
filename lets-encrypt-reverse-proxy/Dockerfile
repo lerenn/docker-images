@@ -25,5 +25,9 @@ ENV LETSENCRYPT_EMAIL none
 ENV RSA_KEY_SIZE 4096
 ENV STARTUP_WAIT 0
 
+# Ports
+EXPOSE 80
+EXPOSE 443
+
 # Command
 CMD ["bash", "/docker/scripts/entrypoint.sh" ]
