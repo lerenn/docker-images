@@ -28,10 +28,8 @@ To run the image with a minimum of arguments, execute the following command :
 
 ### Environment variables
 
-* **BASE_URL**: Base URL for your website. Defaults to `localhost`.
 * **CONFIG_FILE**: Configuration file used to build the website. Defaults to `config.toml`.
 * **PERIOD**: Period of time, in minutes, between each check for change.
 Defaults to `10`.
-* **PUBLISH_DIR**: Directory where the website is published. Defaults to `public`.
 * **REPO_LINK**: Link to the hugo website repository (https/https only).
 Defaults to `<none>`.

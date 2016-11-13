@@ -1,9 +1,11 @@
-FROM alpine
+FROM debian:jessie
 MAINTAINER Louis Fradin <louis.fradin@gmail.com>
 
-# Install requirements
-RUN apk update
-RUN apk add wget git tar rsync bash
+# Updating system
+RUN apt-get update && apt-get upgrade -y
+
+# Installation of nginx
+RUN apt-get install -y nginx wget git tar
 
 # Install hugo
 RUN wget https://github.com/spf13/hugo/releases/download/v0.17/hugo_0.17_Linux-64bit.tar.gz && \
@@ -12,18 +14,19 @@ RUN wget https://github.com/spf13/hugo/releases/download/v0.17/hugo_0.17_Linux-6
     chmod +x /bin/hugo && \
     rm -rf /tmp/hugo* hugo*
 
+# Copy files
+COPY docker/ /docker
+
+# Add default config
+RUN sed -i '/^\troot/aerror\_page 404 \= \/404\.html;' /etc/nginx/sites-enabled/default
+
 # Environment variables
 ENV CONFIG_FILE "config.toml"
 ENV PERIOD 10
-ENV PUBLISH_DIR "public"
 ENV REPO_LINK ""
-ENV BASE_URL "localhost"
 
 # Ports
 EXPOSE 80
-
-# Copy files
-COPY docker/ /docker
 
 # Command
 CMD ["bash", "/docker/scripts/entrypoint.sh"]

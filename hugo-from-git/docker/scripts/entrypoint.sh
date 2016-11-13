@@ -13,6 +13,6 @@ Update
 echo "Launch synchronization"
 bash /docker/scripts/synchronize.sh &
 
-echo "Display hugo website"
-cd /var/www/html
-hugo server -w -v --disableLiveReload --port 80 --config=$CONFIG_FILE --baseURL $BASE_URL --bind $HOSTNAME
+echo "Launch nginx"
+mkdir -p /run/nginx
+nginx -g "daemon off;"
