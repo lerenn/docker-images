@@ -6,11 +6,11 @@ RUN apk update
 RUN apk add wget git tar rsync bash
 
 # Install hugo
-RUN wget https://github.com/spf13/hugo/releases/download/v0.17/hugo_0.17_linux-64bit.tgz && \
+RUN wget https://github.com/spf13/hugo/releases/download/v0.17/hugo_0.17_Linux-64bit.tar.gz && \
     mkdir -p /tmp/hugo && \
-    tar -C /tmp/hugo -xvzf hugo_0.17_linux-64bit.tgz && \
+    tar -C /tmp/hugo -xvzf hugo_0.17_Linux-64bit.tar.gz && \
     mv /tmp/hugo/hugo /bin && \
-    rm -rf /tmp/hugo hugo_0.17_linux-64bit.tgz
+    rm -rf /tmp/hugo hugo_0.17_Linux-64bit.tar.gz
 
 # Environment variables
 ENV CONFIG_FILE "config.toml"
