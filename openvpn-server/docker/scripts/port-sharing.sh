@@ -7,11 +7,16 @@ echo "Place correct line for port-sharing"
 # Get container IP
 LINE=`cat /etc/hosts | grep $SHARE_PORT_CONTAINER`
 if [ "$LINE" == "" ]; then
-	echo "No corresponding container linked"
-	exit
+	if [ "$(ping -c 1 $SHARE_PORT_CONTAINER | awk -F'[()]' '/PING/{print $2}')" == "" ]; then
+		echo "No corresponding container linked"
+		exit
+	else
+		IP=$(ping -c 1 $SHARE_PORT_CONTAINER | awk -F'[()]' '/PING/{print $2}')
+	fi
+else
+	array=(${LINE/ /})
+	IP=${array[0]}
 fi
-array=(${LINE/ /})
-IP=${array[0]}
 
 # Application to server.conf
 if [ ! -f $PATH_CONF ]; then
