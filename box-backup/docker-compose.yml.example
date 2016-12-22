@@ -1,0 +1,15 @@
+box-backup:
+  build: .
+  volumes:
+    - "./test:/data"
+  environment:
+    - BOX_EMAIL=XXX
+    - BOX_PASSWORD=XXX
+    - ENCRYPTION=true
+    - ENCRYPTION_PASSWORD=test
+    - SPLIT=true
+    - SPLIT_SIZE=1K
+    - BACKUP_NBR=3
+    - DESTINATION_FOLDER=Test/curl
+    - CRON=false
+    - CRON_SCHEME="* * * * *"

@@ -2,9 +2,7 @@ FROM debian:jessie
 MAINTAINER Louis Fradin <louis.fradin@gmail.com>
 
 # Install requirements
-RUN apt-get update
-RUN apt-get install -y cadaver
-RUN apt-get install -y cron
+RUN apt-get update && apt-get install -y curl cron cadaver
 
 # Prepare files
 RUN mkdir /var/archives && \
@@ -19,6 +17,7 @@ ENV SPLIT false
 ENV SPLIT_SIZE 500M
 ENV BACKUP_NBR -1
 ENV DESTINATION_FOLDER Test
+ENV CRON true
 ENV CRON_SCHEME "0 3 * * *"
 
 # Volume

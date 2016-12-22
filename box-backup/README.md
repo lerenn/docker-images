@@ -25,6 +25,7 @@ To run the image with a minimum of arguments, execute the following command :
 * **SPLIT_SIZE**: Size of each part (for format, see `split` doc). Defaults to `500M`.
 * **BACKUP_NBR**: Maximum number of backup that there should be on Box account (if negative, deactivated). Defaults to `-1`.
 * **DESTINATION_FOLDER**: Destination folder on Box account. Defaults to `Test`.
+* **CRON**: If true, backup will occur according to the CRON_SCHEME. If false, backup will be executed as soon as the container is ready and the container will die after backup. Defaults to `true`;
 * **CRON_SCHEME**: When the backup should occured. Based on [cron scheme](https://en.wikipedia.org/wiki/Cron). Defaults to `0 3 * * *` (everyday at 3AM).
 
 ### Volumes

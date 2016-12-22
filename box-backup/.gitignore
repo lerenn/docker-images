@@ -1,2 +1,4 @@
 docker-compose.yml
 tmp/
+test/*
+!test/hello.txt

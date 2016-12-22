@@ -6,6 +6,7 @@ ARCHIVE_DIR=/var/archives
 ARCHIVE_NAME="backup-${NOW}.tar.gz"
 BOX_ADDRESS=https://dav.box.com/dav
 BACKUP_DIR="backup-${NOW}"
+BACKUP_DIST_DIR="${BOX_ADDRESS}/${DESTINATION_FOLDER}/${BACKUP_DIR}"
 
 # Get others variables
 . /docker/data/vars.sh
@@ -39,25 +40,23 @@ echo "${ARCHIVE_DATA}"
 
 # Send data
 ################################################################################
-echo "### Transfert data to ${DESTINATION_FOLDER}/${BACKUP_DIR}"
+echo "### Transfert data to ${BACKUP_DIST_DIR}"
 
 # Create directories
-path=""
+NEW_PATH=""
 directories=$(echo "${DESTINATION_FOLDER}/${BACKUP_DIR}" | tr "/" "\n")
 for dir in ${directories}
 do
-  path="${path}${dir}/"
-  cadaver ${BOX_ADDRESS} <<EOF
-mkcol ${path}
-EOF
+  NEW_PATH="${NEW_PATH}${dir}/"
+  echo "Create ${NEW_PATH}"
+  curl -sS --user "${BOX_EMAIL}:${BOX_PASSWORD}" -X MKCOL "${BOX_ADDRESS}/${NEW_PATH}"
 done
 
 # Transfer data
 for file in ${ARCHIVE_DATA}
 do
-  cadaver ${BOX_ADDRESS} <<EOF
-put ${ARCHIVE_DIR}/${file} ${DESTINATION_FOLDER}/${BACKUP_DIR}/${file}
-EOF
+  echo "Transfert ${file}"
+  curl -sS --user "${BOX_EMAIL}:${BOX_PASSWORD}" -T "${ARCHIVE_DIR}/${file}" "${BACKUP_DIST_DIR}/"
 done
 
 # Delete old backups
@@ -88,9 +87,9 @@ EOF`
 
   # Delete oldest files
   for var in "${FILES_TO_DELETE[@]}"; do
-cadaver ${BOX_ADDRESS} <<EOF
-rmcol ${DESTINATION_FOLDER}/${var}
-EOF
+    DELETED_DIR="${BOX_ADDRESS}/${DESTINATION_FOLDER}/${var}"
+    echo "Delete ${DELETED_DIR}"
+    curl -sS --user "${BOX_EMAIL}:${BOX_PASSWORD}" -X DELETE "${DELETED_DIR}"
   done
 fi
 
