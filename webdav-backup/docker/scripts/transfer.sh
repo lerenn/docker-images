@@ -29,9 +29,9 @@ until [ "${STOP}" == "true" ]; do
 
   if [ "${NBR_FILES}" -ge "2" ]; then
     # Transfer data
-    echo "Transfert ${file}"
   	SUCCESS=1
   	until [  ${SUCCESS} -eq 0 ]; do
+      echo "Transfert ${file}"
       curl -sS --user "${WEBDAV_USERNAME}:${WEBDAV_PASSWORD}" -m ${TIMEOUT} \
            -T "${ARCHIVE_DIR}/${file}" "${BACKUP_DIST_DIR}/"
   		SUCCESS=$?
