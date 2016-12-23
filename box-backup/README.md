@@ -1,5 +1,15 @@
 # Box Backup
-Docker image for backing up files to Box.com account.
+Docker image for backing up files to Box.com account (through WebDAV).
+
+This image will make a `.tar.gz` backup of all files in the volume `/data` and push it to box-server (through WebDAV).
+You can also encrypt this backup and/or split this file into small pieces (as Box only accepts a limited size of file).
+
+This backup can be instantaneous or scheduled, through CRON job (see `CRON` and `CRON_SCHEME` variables below).
+
+For each WebDAV operation, you have a time out (defaults to 120 sec and editable).
+If the operation fails (whatever is the reason), it will be restarted until it succeed.
+
+For more information, please see the `Arguments` section below.
 
 ## Build
 
@@ -25,7 +35,11 @@ To run the image with a minimum of arguments, execute the following command :
 * **SPLIT_SIZE**: Size of each part (for format, see `split` doc). Defaults to `500M`.
 * **BACKUP_NBR**: Maximum number of backup that there should be on Box account (if negative, deactivated). Defaults to `-1`.
 * **DESTINATION_FOLDER**: Destination folder on Box account. Defaults to `Test`.
-* **CRON**: If true, backup will occur according to the CRON_SCHEME. If false, backup will be executed as soon as the container is ready and the container will die after backup. Defaults to `true`;
+* **TIMEOUT**: Timeout for each WebDAV operation. If the total WebDAV operation
+  time exceeds this value (in seconds), then operation will be avorted and restarted.
+  Defaults to `120`.
+* **CRON**: If true, backup will occur according to the CRON_SCHEME. If false,
+  backup will be executed as soon as the container is ready and the container will die after backup. Defaults to `true`;
 * **CRON_SCHEME**: When the backup should occured. Based on [cron scheme](https://en.wikipedia.org/wiki/Cron). Defaults to `0 3 * * *` (everyday at 3AM).
 
 ### Volumes

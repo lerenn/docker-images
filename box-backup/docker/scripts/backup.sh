@@ -45,18 +45,26 @@ echo "### Transfert data to ${BACKUP_DIST_DIR}"
 # Create directories
 NEW_PATH=""
 directories=$(echo "${DESTINATION_FOLDER}/${BACKUP_DIR}" | tr "/" "\n")
-for dir in ${directories}
-do
+for dir in ${directories}; do
   NEW_PATH="${NEW_PATH}${dir}/"
   echo "Create ${NEW_PATH}"
-  curl -sS --user "${BOX_EMAIL}:${BOX_PASSWORD}" -X MKCOL "${BOX_ADDRESS}/${NEW_PATH}"
+  SUCCESS=1
+	until [  ${SUCCESS} -eq 0 ]; do
+    curl -sS --user "${BOX_EMAIL}:${BOX_PASSWORD}" -m ${TIMEOUT} \
+         -X MKCOL "${BOX_ADDRESS}/${NEW_PATH}"
+    SUCCESS=$?
+  done
 done
 
 # Transfer data
-for file in ${ARCHIVE_DATA}
-do
+for file in ${ARCHIVE_DATA}; do
   echo "Transfert ${file}"
-  curl -sS --user "${BOX_EMAIL}:${BOX_PASSWORD}" -T "${ARCHIVE_DIR}/${file}" "${BACKUP_DIST_DIR}/"
+	SUCCESS=1
+	until [  ${SUCCESS} -eq 0 ]; do
+    curl -sS --user "${BOX_EMAIL}:${BOX_PASSWORD}" -m ${TIMEOUT} \
+         -T "${ARCHIVE_DIR}/${file}" "${BACKUP_DIST_DIR}/"
+		SUCCESS=$?
+	done
 done
 
 # Delete old backups
@@ -89,7 +97,12 @@ EOF`
   for var in "${FILES_TO_DELETE[@]}"; do
     DELETED_DIR="${BOX_ADDRESS}/${DESTINATION_FOLDER}/${var}"
     echo "Delete ${DELETED_DIR}"
-    curl -sS --user "${BOX_EMAIL}:${BOX_PASSWORD}" -X DELETE "${DELETED_DIR}"
+  	SUCCESS=1
+  	until [  ${SUCCESS} -eq 0 ]; do
+      curl -sS --user "${BOX_EMAIL}:${BOX_PASSWORD}" -m ${TIMEOUT} \
+           -X DELETE "${DELETED_DIR}"
+      SUCCESS=$?
+    done
   done
 fi
 
