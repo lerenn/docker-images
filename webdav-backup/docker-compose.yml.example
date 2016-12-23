@@ -9,7 +9,7 @@ webdav-backup:
     - ENCRYPTION=true
     - ENCRYPTION_PASSWORD=test
     - SPLIT=true
-    - SPLIT_SIZE=1K
+    - SPLIT_SIZE=100
     - BACKUP_NBR=3
     - DESTINATION_FOLDER=Test
     - CRON=false
