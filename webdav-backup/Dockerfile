@@ -9,8 +9,9 @@ RUN mkdir /var/archives && \
     touch /var/log/cron.log
 
 # Variables
-ENV BOX_EMAIL ""
-ENV BOX_PASSWORD ""
+ENV WEBDAV_HOST ""
+ENV WEBDAV_USERNAME ""
+ENV WEBDAV_PASSWORD ""
 ENV ENCRYPTION false
 ENV ENCRYPTION_PASSWORD ""
 ENV SPLIT false

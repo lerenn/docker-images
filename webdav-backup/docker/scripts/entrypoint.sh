@@ -1,14 +1,15 @@
 #!/bin/bash
 
 # Check variables
-if [ "$BOX_EMAIL" == "" ]; then echo "Please provide a username for your box account"; exit; fi
-if [ "$BOX_PASSWORD" == "" ]; then echo "Please provide a password for your box account"; exit; fi
+if [ "$WEBDAV_HOST" == "" ]; then echo "Please provide a host for the webdav operations"; exit; fi
+if [ "$WEBDAV_USERNAME" == "" ]; then echo "Please provide a username for the webdav operations"; exit; fi
+if [ "$WEBDAV_PASSWORD" == "" ]; then echo "Please provide a password for the webdav operations"; exit; fi
 
 # Prepare file
 rm -f ~/.netrc
 echo "default" >> ~/.netrc
-echo "login $BOX_EMAIL" >> ~/.netrc
-echo "password $BOX_PASSWORD" >> ~/.netrc
+echo "login $WEBDAV_USERNAME" >> ~/.netrc
+echo "password $WEBDAV_PASSWORD" >> ~/.netrc
 chmod 600 ~/.netrc
 
 # Create var file
@@ -19,8 +20,8 @@ echo "DESTINATION_FOLDER=${DESTINATION_FOLDER}" >> /docker/data/vars.sh
 chmod 600 /docker/data/vars.sh
 
 # Create cron file
-echo "${CRON_SCHEME} root bash /docker/scripts/backup.sh >> /var/log/cron.log 2>&1" > /etc/cron.d/box-backup
-chmod 0644 /etc/cron.d/box-backup
+echo "${CRON_SCHEME} root bash /docker/scripts/backup.sh >> /var/log/cron.log 2>&1" > /etc/cron.d/webdav-backup
+chmod 0644 /etc/cron.d/webdav-backup
 
 # Make backup
 if [ ${CRON} == false ]; then

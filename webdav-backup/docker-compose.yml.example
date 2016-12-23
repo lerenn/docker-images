@@ -1,15 +1,16 @@
-box-backup:
+webdav-backup:
   build: .
   volumes:
     - "./test:/data"
   environment:
-    - BOX_EMAIL=XXX
-    - BOX_PASSWORD=XXX
+    - WEBDAV_HOST=XXX
+    - WEBDAV_USERNAME=XXX
+    - WEBDAV_PASSWORD=XXX
     - ENCRYPTION=true
     - ENCRYPTION_PASSWORD=test
     - SPLIT=true
     - SPLIT_SIZE=1K
     - BACKUP_NBR=3
-    - DESTINATION_FOLDER=Test/curl
+    - DESTINATION_FOLDER=Test
     - CRON=false
     - CRON_SCHEME="* * * * *"

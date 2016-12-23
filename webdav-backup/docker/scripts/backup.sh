@@ -4,9 +4,8 @@
 NOW=`date +%Y%m%d-%H%M%S`
 ARCHIVE_DIR=/var/archives
 ARCHIVE_NAME="backup-${NOW}.tar.gz"
-BOX_ADDRESS=https://dav.box.com/dav
 BACKUP_DIR="backup-${NOW}"
-BACKUP_DIST_DIR="${BOX_ADDRESS}/${DESTINATION_FOLDER}/${BACKUP_DIR}"
+BACKUP_DIST_DIR="${WEBDAV_HOST}/${DESTINATION_FOLDER}/${BACKUP_DIR}"
 
 # Get others variables
 . /docker/data/vars.sh
@@ -50,8 +49,8 @@ for dir in ${directories}; do
   echo "Create ${NEW_PATH}"
   SUCCESS=1
 	until [  ${SUCCESS} -eq 0 ]; do
-    curl -sS --user "${BOX_EMAIL}:${BOX_PASSWORD}" -m ${TIMEOUT} \
-         -X MKCOL "${BOX_ADDRESS}/${NEW_PATH}"
+    curl -sS --user "${WEBDAV_USERNAME}:${WEBDAV_PASSWORD}" -m ${TIMEOUT} \
+         -X MKCOL "${WEBDAV_HOST}/${NEW_PATH}"
     SUCCESS=$?
   done
 done
@@ -61,7 +60,7 @@ for file in ${ARCHIVE_DATA}; do
   echo "Transfert ${file}"
 	SUCCESS=1
 	until [  ${SUCCESS} -eq 0 ]; do
-    curl -sS --user "${BOX_EMAIL}:${BOX_PASSWORD}" -m ${TIMEOUT} \
+    curl -sS --user "${WEBDAV_USERNAME}:${WEBDAV_PASSWORD}" -m ${TIMEOUT} \
          -T "${ARCHIVE_DIR}/${file}" "${BACKUP_DIST_DIR}/"
 		SUCCESS=$?
 	done
@@ -73,7 +72,7 @@ if [[ $BACKUP_NBR > 0 ]]; then
   echo "### Delete oldest backups"
 
   # Get list of files
-INFOS=`cadaver ${BOX_ADDRESS} <<EOF
+INFOS=`cadaver ${WEBDAV_HOST} <<EOF
 ls ${DESTINATION_FOLDER}
 EOF`
 
@@ -95,11 +94,11 @@ EOF`
 
   # Delete oldest files
   for var in "${FILES_TO_DELETE[@]}"; do
-    DELETED_DIR="${BOX_ADDRESS}/${DESTINATION_FOLDER}/${var}"
+    DELETED_DIR="${WEBDAV_HOST}/${DESTINATION_FOLDER}/${var}"
     echo "Delete ${DELETED_DIR}"
   	SUCCESS=1
   	until [  ${SUCCESS} -eq 0 ]; do
-      curl -sS --user "${BOX_EMAIL}:${BOX_PASSWORD}" -m ${TIMEOUT} \
+      curl -sS --user "${WEBDAV_USERNAME}:${WEBDAV_PASSWORD}" -m ${TIMEOUT} \
            -X DELETE "${DELETED_DIR}"
       SUCCESS=$?
     done
