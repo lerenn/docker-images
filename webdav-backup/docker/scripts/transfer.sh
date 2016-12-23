@@ -43,7 +43,6 @@ until [ "${STOP}" == "true" ]; do
     echo "End"
     STOP=true
   else
-    echo -n "."
     sleep 1
   fi
 done
