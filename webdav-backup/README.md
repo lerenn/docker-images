@@ -7,6 +7,9 @@ You can also encrypt this backup and/or split this file into small pieces (as ce
 
 This backup can be instantaneous or scheduled, through CRON job (see `CRON` and `CRON_SCHEME` variables below).
 
+If the backup is split, the program will try to send a part as soon as it as been created and delete it as soon as it has been completed.
+Theoretically, if generation is as fast as sending, you should need only the space for two parts.
+
 For each WebDAV operation, you have a time out (defaults to 120 sec and editable).
 If the operation fails (whatever is the reason), it will be restarted until it succeed.
 
