@@ -43,8 +43,8 @@ until [ "${STOP}" == "true" ]; do
     echo "End"
     STOP=true
   else
-    echo "Wait 5 seconds for next part..."
-    sleep 5
+    echo -n "."
+    sleep 1
   fi
 done
 
