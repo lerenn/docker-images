@@ -52,6 +52,16 @@ To **avoid certificate regeneration** at each container creation, please conside
 
 For more informations: https://letsencrypt.org/docs/rate-limits/.
 
+### Certificates generation and renewal
+
+Certificates specified in arguments are created when the container is (re)started.
+Same goes for certificates renewal: certbot will try to renew present certificates
+(even those that are not in arguments) if they will expire in less than 30 days or
+if they are already expired.
+
+Maybe one day, I will add the possibility of a cron job that will check if there is
+a need for renewal (but not now, I have "Aqua-pony").
+
 ### Use of certificates
 
 After the generation of the certificates, you can find them at `/etc/letsencrypt/live/<domain>`.
