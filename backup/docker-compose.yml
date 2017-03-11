@@ -1,6 +1,7 @@
 backup:
   build: .
   environment:
-    - BACKUP_DIR=root@fr.louis-fradin.net:/etc
+    - BACKUP_DIR=root@server1.lerenn.net:/tmp/test-backup
+    - CRON_SCHEME="* * * * *"
   volumes:
     - /home/lerenn/.ssh:/keys:z

@@ -1,13 +1,13 @@
-FROM alpine
+FROM debian:jessie
 MAINTAINER Louis Fradin <louis.fradin@gmail.com>
 
 # Install requirements
-RUN apk update
-RUN apk add rsync bash openssh
+RUN apt-get update \
+  && apt-get install -y rsync cron openssh-client
 
 # Environment variables
-ENV BACKUP_PERIOD 24
-ENV BACKUP_DIR ""
+ENV BACKUP_DIR " "
+ENV CRON_SCHEME "0 3 * * *"
 
 # Volumes
 VOLUME /backup
