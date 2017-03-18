@@ -1,0 +1,9 @@
+sftp-server:
+  build: .
+  ports:
+    - "127.0.0.1:1024:22"
+  volumes:
+    - "./testing/authorized_keys:/docker/authorized_keys:z"
+  environment:
+    - USERNAME1=user1
+    - PASSWORD1=pass1

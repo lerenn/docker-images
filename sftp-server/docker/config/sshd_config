@@ -23,7 +23,7 @@ LogLevel INFO
 
 # Authentication:
 LoginGraceTime 120
-PermitRootLogin no
+PermitRootLogin without-password
 StrictModes yes
 
 RSAAuthentication yes
@@ -86,9 +86,10 @@ AcceptEnv LANG LC_*
 UsePAM yes
 
 # Configuration of the SFTP
- Subsystem sftp internal-sftp
+Subsystem sftp internal-sftp
 
- Match Group sftp
-        ChrootDirectory /server
-        ForceCommand internal-sftp
-        AllowTCPForwarding yes
+Match Group sftp
+  ChrootDirectory /home/%u
+  ForceCommand internal-sftp
+  AllowTCPForwarding yes
+  X11Forwarding no
