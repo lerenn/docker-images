@@ -15,5 +15,8 @@ RUN bash /docker/install/install.sh && \
 # Ports
 EXPOSE 443
 
+# Volumes
+VOLUME /etc/openvpn
+
 # Command
 CMD ["bash", "/docker/scripts/entrypoint.sh"]

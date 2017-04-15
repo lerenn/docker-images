@@ -1,7 +1,10 @@
 # docker-openvpn
 
 Image docker for installing an openvpn server.
-You can share the vpn port with an other container (example: NGINX on 443).
+
+Features:
+ - You can share the vpn port with an other container (example: NGINX on 443);
+ - IP traffic inside tunnel to server (10.8.0.1) will be redirected to server public IP.
 
 ## Versions
 

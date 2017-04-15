@@ -1,0 +1,16 @@
+openvpn:
+  build: .
+  ports:
+    - 127.0.0.1:443:443
+  privileged: true
+  environment:
+    KEY_COUNTTRY: CO
+    KEY_PROVINCE: PROVINCE
+    KEY_CITY: CITY
+    KEY_ORG: key.org
+    KEY_EMAIL: key@key.org
+    KEY_CN: CO
+    KEY_NAME: openvpn-server
+    SERVER_IP: 127.0.0.1
+    SERVER_PORT: 443
+    CLIENT1: client
