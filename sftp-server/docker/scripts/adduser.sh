@@ -18,6 +18,7 @@ chown $USERNAME:$USERNAME /home/$USERNAME/data
 
 # Check certificate
 if [ -f /docker/authorized_keys/$USERNAME ]; then
+  mkdir -p /home/$USERNAME/.ssh
   cp /docker/authorized_keys/$USERNAME /home/$USERNAME/.ssh/authorized_keys
   chmod 600 /home/$USERNAME/.ssh/authorized_keys
   chown $USERNAME:$USERNAME /home/$USERNAME/.ssh/authorized_keys
