@@ -1,12 +1,12 @@
-# docker-backup
+# rsync-backup
 
 Docker image for automatic backup of files locally and remotely.
 
 ## Build
 
-To create the image `lerenn/backup`, execute the following command on the backup project folder :
+To create the image `lerenn/rsync-backup`, execute the following command on the backup project folder :
 
-    docker build -t lerenn/backup .
+    docker build -t lerenn/rsync-backup .
 
 ## Run
 
