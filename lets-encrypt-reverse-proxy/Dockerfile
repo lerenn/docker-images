@@ -1,13 +1,12 @@
-FROM debian:jessie
+FROM debian:stretch
 MAINTAINER Louis Fradin <louis.fradin@gmail.com>
 
 # Update distrib
-RUN echo "deb http://ftp.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
 RUN apt-get update
 
 # Install certbot and nginx
 RUN apt-get install -y nginx dnsmasq
-RUN apt-get install -y certbot -t jessie-backports
+RUN apt-get install -y certbot
 
 # Copy files
 COPY docker /docker
