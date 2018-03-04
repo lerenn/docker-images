@@ -14,7 +14,7 @@ To create the image `lerenn/lets-encrypt-reverse-proxy`, execute the following c
 
 If you want to use a reverse-proxy on HTTP and/or HTTPS websites, here is the basic command :
 
-    docker run -d -p 80:80 -p 443:443 -v /path/in/host:/etc/letsencrypt -v /path/in/host:/etc/nginx/sites-enabled -e CERT1="example.com;subdomain.example.com" lerenn/nginx-reverse-proxy
+    docker run -d -p 80:80 -p 443:443 -v /path/in/host:/etc/letsencrypt -v /path/in/host:/etc/nginx/sites-enabled -e CERT1="example.com;subdomain.example.com" lerenn/lets-encrypt-reverse-proxy
 
 ## Arguments
 
