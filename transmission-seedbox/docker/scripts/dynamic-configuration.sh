@@ -15,14 +15,32 @@ function set_token {
 	fi
 }
 
-# Set directories
-mkdir -p /data/configuration/watch-dir
-mkdir -p /data/configuration/torrents
-mkdir -p /data/downloads
+# SFTP 
+###############################################################################
 
 # Add sftp account
 ENCRYPT_PASSWORD=`mkpasswd --method=SHA-512 $PASSWORD`
 useradd $USERNAME --gid sftp -G debian-transmission,sftp -p $ENCRYPT_PASSWORD -m --shell /bin/false
+
+# Apache
+###############################################################################
+
+# Add Readme
+cp -f /docker/configurations/README.txt /data/downloads
+
+# Add htpassword
+htpasswd -b -c /data/configuration/.htpasswd $USERNAME $PASSWORD
+
+# Add htaccess
+cp -f /docker/configurations/htaccess /data/downloads/.htaccess
+
+# Seedbox
+###############################################################################
+
+# Set directories
+mkdir -p /data/configuration/watch-dir
+mkdir -p /data/configuration/torrents
+mkdir -p /data/downloads
 
 # Set configuration
 cp /etc/transmission-daemon/settings.json /data/configuration

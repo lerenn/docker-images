@@ -5,8 +5,16 @@ MAINTAINER Louis Fradin <louis.fradin@gmail.com>
 RUN apt-get update && apt-get upgrade -y
 
 # Requirements installation
-RUN apt-get install transmission-daemon ssh openssh-server whois -y
-RUN apt-get install sudo -y
+RUN apt-get install transmission-daemon ssh openssh-server whois sudo -y
+RUN apt-get install apache2 -y
+
+# Copy files
+COPY docker /docker
+
+# Configuration
+RUN bash /docker/scripts/static-configuration.sh && \
+  cp /docker/configurations/sshd_config /etc/ssh/sshd_config && \
+  addgroup sftp && touch /var/log/transmission.log
 
 # Create Volume
 VOLUME /data
@@ -15,14 +23,8 @@ VOLUME /data
 ENV PEER_PORT=51413 USERNAME=admin PASSWORD=admin RATIO_LIMIT=999999
 
 # Ports
-EXPOSE 22 9091
+EXPOSE 22 80 9091
 
 # Command
 CMD [ "bash", "/docker/scripts/entrypoint.sh" ]
 
-# Copy files
-COPY docker /docker
-
-# Configuration
-RUN cp /docker/configurations/sshd_config /etc/ssh/sshd_config && \
-    addgroup sftp && touch /var/log/transmission.log
