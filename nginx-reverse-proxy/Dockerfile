@@ -1,11 +1,8 @@
 FROM debian:stretch
 
-# Installation de NGINX
+# Installation de NGINX et dnsmasq
 RUN apt-get update
-RUN apt-get install nginx -y
-
-# Installation de dnsmasq
-RUN apt-get install dnsmasq -y
+RUN apt-get install nginx curl dnsmasq -y
 
 # Création du dossier contenant les certificats
 RUN mkdir /etc/nginx/certificates

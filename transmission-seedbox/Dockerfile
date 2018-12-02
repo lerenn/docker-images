@@ -5,8 +5,7 @@ MAINTAINER Louis Fradin <louis.fradin@gmail.com>
 RUN apt-get update && apt-get upgrade -y
 
 # Requirements installation
-RUN apt-get install transmission-daemon ssh openssh-server whois sudo -y
-RUN apt-get install apache2 -y
+RUN apt-get install -y transmission-daemon ssh openssh-server whois sudo apache2 curl
 
 # Copy files
 COPY docker /docker

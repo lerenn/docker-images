@@ -5,8 +5,7 @@ MAINTAINER Louis Fradin <louis.fradin@gmail.com>
 RUN apt-get update
 
 # Install certbot and nginx
-RUN apt-get install -y nginx dnsmasq
-RUN apt-get install -y certbot
+RUN apt-get install -y nginx dnsmasq certbot curl
 
 # Copy files
 COPY docker /docker

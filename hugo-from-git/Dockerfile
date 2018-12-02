@@ -5,7 +5,7 @@ MAINTAINER Louis Fradin <louis.fradin@gmail.com>
 RUN apt-get update && apt-get upgrade -y
 
 # Installation of nginx
-RUN apt-get install -y nginx wget git tar
+RUN apt-get install -y nginx wget git tar curl
 
 # Install hugo
 RUN wget https://github.com/spf13/hugo/releases/download/v0.17/hugo_0.17_Linux-64bit.tar.gz && \
