@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:stretch
 
 # Installation de NGINX
 RUN apt-get update
@@ -20,4 +20,7 @@ COPY confs/proxy.conf /etc/nginx/conf.d/
 
 # Exposition du port
 EXPOSE 80 443
+
+# Add command
 CMD ["nginx", "-g", "daemon off;"]
+HEALTHCHECK CMD curl --fail http://localhost || exit 1
