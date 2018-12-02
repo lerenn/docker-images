@@ -5,4 +5,4 @@ hugo-from-git:
   environment:
     - CONFIG_FILE=config_en.toml
     - PERIOD=1
-    - REPO_LINK=https://github.com/Lerenn/louis-fradin.net.git
+    - REPO_LINK=https://github.com/lerenn/lerenn.net

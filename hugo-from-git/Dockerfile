@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:stretch
 MAINTAINER Louis Fradin <louis.fradin@gmail.com>
 
 # Updating system
@@ -28,5 +28,6 @@ ENV REPO_LINK ""
 # Ports
 EXPOSE 80
 
-# Command
+# Command and healthcheck
 CMD ["bash", "/docker/scripts/entrypoint.sh"]
+HEALTHCHECK CMD curl --fail http://localhost || exit 1
