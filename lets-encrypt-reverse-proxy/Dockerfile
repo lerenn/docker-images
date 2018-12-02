@@ -28,5 +28,6 @@ ENV STARTUP_WAIT 0
 EXPOSE 80
 EXPOSE 443
 
-# Command
+# Command and healthcheck
 CMD ["bash", "/docker/scripts/entrypoint.sh" ]
+HEALTHCHECK CMD curl --fail http://localhost || exit 1
