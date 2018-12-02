@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:stretch
 MAINTAINER Louis Fradin <louis.fradin@gmail.com
 
 # This image is adapted from the tutorial made by Nicolargo at
@@ -18,5 +18,6 @@ EXPOSE 443
 # Volumes
 VOLUME /etc/openvpn
 
-# Command
+# Command and healthcheck
 CMD ["bash", "/docker/scripts/entrypoint.sh"]
+HEALTHCHECK CMD [ "$(curl -I -q localhost:443 | grep 400 | wc -l)" == 1 ] || exit 1
