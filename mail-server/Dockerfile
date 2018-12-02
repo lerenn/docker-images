@@ -1,6 +1,6 @@
 # Inspired by : https://tech.tiq.cc/2014/02/how-to-set-up-an-email-server-with-postfix-and-dovecot-without-mysql-on-debian-7/
 
-FROM debian:jessie
+FROM debian:stretch
 MAINTAINER Louis Fradin <louis.fradin@gmail.com>
 
 # Installation
