@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:stretch
 MAINTAINER Louis Fradin <louis.fradin@gmail.com>
 
 # Update System
@@ -27,4 +27,4 @@ EXPOSE 22 80 9091
 
 # Command
 CMD [ "bash", "/docker/scripts/entrypoint.sh" ]
-
+HEALTHCHECK CMD [ "$(curl -I -q localhost:9091 | grep 401 | wc -l)" == 1 ] || exit 1
