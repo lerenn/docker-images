@@ -1,0 +1,6 @@
+xmrig:
+  build: .
+  environment:
+    - POOL=fr.minexmr.com:4444
+    - USERNAME=44tLjmXrQNrWJ5NBsEj2R77ZBEgDa3fEe9GLpSf2FRmhexPvfYDUAB7EXX1Hdb3aMQ9FLqdJ56yaAhiXoRsceGJCRS3Jxkn.0c41df48464412fb20e5578f2613946b69881f7851fbdd9a6739272c25d764bb
+    - THREADS=4
