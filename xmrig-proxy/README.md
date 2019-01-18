@@ -1,4 +1,4 @@
-# docker-hugo-git
+# xmrig-proxy
 
 Docker image for xmrig-proxy
 
