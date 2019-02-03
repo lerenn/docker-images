@@ -13,6 +13,9 @@ sed -Ei "s/^export KEY_EMAIL.*/export KEY_EMAIL=\"$KEY_EMAIL\"/" /etc/openvpn/ea
 sed -Ei "s/^export KEY_CN.*/export KEY_CN=$KEY_CN/" /etc/openvpn/easy-rsa/vars
 sed -Ei "s/^export KEY_NAME.*/export KEY_NAME=$KEY_NAME/" /etc/openvpn/easy-rsa/vars
 
+# Add openssl.cnf
+ln -s /etc/openvpn/easy-rsa/openssl-1.0.0.cnf /etc/openvpn/easy-rsa/openssl.cnf
+
 # Generate certificates
 source /etc/openvpn/easy-rsa/vars
 /etc/openvpn/easy-rsa/clean-all
