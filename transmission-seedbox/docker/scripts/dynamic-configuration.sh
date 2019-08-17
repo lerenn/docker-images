@@ -15,7 +15,7 @@ function set_token {
 	fi
 }
 
-# SFTP 
+# SFTP
 ###############################################################################
 
 # Add sftp account
@@ -24,9 +24,6 @@ useradd $USERNAME --gid sftp -G debian-transmission,sftp -p $ENCRYPT_PASSWORD -m
 
 # Apache
 ###############################################################################
-
-# Add Readme
-cp -f /docker/configurations/README.txt /data/downloads
 
 # Add htpassword
 htpasswd -b -c /data/configuration/.htpasswd $USERNAME $PASSWORD
@@ -41,6 +38,9 @@ cp -f /docker/configurations/htaccess /data/downloads/.htaccess
 mkdir -p /data/configuration/watch-dir
 mkdir -p /data/configuration/torrents
 mkdir -p /data/downloads
+
+# Add README to download directory
+cp -f /docker/configurations/README.txt /data/downloads
 
 # Set configuration
 cp /etc/transmission-daemon/settings.json /data/configuration
