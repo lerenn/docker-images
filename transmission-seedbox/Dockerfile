@@ -11,9 +11,7 @@ RUN apt-get install -y transmission-daemon ssh openssh-server whois sudo apache2
 COPY docker /docker
 
 # Configuration
-RUN bash /docker/scripts/static-configuration.sh && \
-  cp /docker/configurations/sshd_config /etc/ssh/sshd_config && \
-  addgroup sftp && touch /var/log/transmission.log
+RUN bash /docker/scripts/static-configuration.sh
 
 # Create Volume
 VOLUME /data
