@@ -1,0 +1,14 @@
+<config>
+  <!-- Folding Slot Configuration -->
+  <gpu v='false'/>
+
+  <!-- Slot Control -->
+  <power v='{{POWER}}'/>
+
+  <!-- User Information -->
+  <team v='{{TEAM}}'/>
+  <user v='{{USERNAME}}'/>
+
+  <!-- Folding Slots -->
+  <slot id='0' type='CPU'/>
+</config>
