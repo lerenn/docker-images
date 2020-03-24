@@ -6,6 +6,7 @@
   <power v='{{POWER}}'/>
 
   <!-- User Information -->
+  <passkey v='{{PASSKEY}}'/>
   <team v='{{TEAM}}'/>
   <user v='{{USERNAME}}'/>
 

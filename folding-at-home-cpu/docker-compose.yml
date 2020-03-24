@@ -2,5 +2,6 @@ folding-at-home-cpu:
     build: .
     environment:
         - POWER=light
+        # - PASSKEY=test
     ports:
         - "127.0.0.1:30000:36330"

@@ -30,3 +30,4 @@ If you want to use the folding@home docker, here is the basic command :
 * **USERNAME**: [Optional] Username used for assigned jobs. Defaults to `Anonymous`.
 * **TEAM**: [Optional] Team used for assigned jobs. Defaults to `0`.
 * **POWER**: [Optional] Power used for assigned jobs. Defaults to `medium`.
+* **PASSKEY**: [Optional] Passkey used for assigned jobs. Defaults to `none`.

@@ -11,6 +11,7 @@ COPY docker /docker
 ENV USERNAME Anonymous
 ENV TEAM 0
 ENV POWER medium
+ENV PASSKEY none
 
 # Port
 EXPOSE 36330

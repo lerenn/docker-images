@@ -10,6 +10,13 @@ sed -i -e "s/{{USERNAME}}/$USERNAME/" $CFG_PATH
 sed -i -e "s/{{TEAM}}/$TEAM/" $CFG_PATH
 sed -i -e "s/{{POWER}}/$POWER/" $CFG_PATH
 
+# Detect if there is a passkey
+if [ $PASSKEY == "none" ]; then 
+    sed -i -e "s/.*passkey.*//" $CFG_PATH
+else
+    sed -i -e "s/{{PASSKEY}}/$PASSKEY/" $CFG_PATH
+fi
+
 # Change configuration rights 
 chown fahclient:root $CFG_PATH
 
