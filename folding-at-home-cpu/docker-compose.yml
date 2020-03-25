@@ -5,3 +5,5 @@ folding-at-home-cpu:
         # - PASSKEY=test
     ports:
         - "127.0.0.1:30000:36330"
+    volumes:
+        - "./volume:/var/lib/fahclient:z"

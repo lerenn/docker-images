@@ -25,6 +25,10 @@ If you want to use the folding@home docker, here is the basic command :
 
 * **36330**: [Optional] Control port.
 
+### Volumes
+
+* **/var/lib/fahclient**: Directory containing data for work. You should use this volume if you want to resume folding jobs when recreating the container, otherwise they will be lost when erasing the container.
+
 ### Environment variables
 
 * **USERNAME**: [Optional] Username used for assigned jobs. Defaults to `Anonymous`.
