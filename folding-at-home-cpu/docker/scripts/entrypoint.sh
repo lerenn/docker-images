@@ -12,8 +12,10 @@ sed -i -e "s/{{POWER}}/$POWER/" $CFG_PATH
 
 echo "# Detect if there is a passkey"
 if [ $PASSKEY == "none" ]; then 
+    echo "No passkey detected"
     sed -i -e "s/.*passkey.*//" $CFG_PATH
 else
+    echo "Passkey detected"
     sed -i -e "s/{{PASSKEY}}/$PASSKEY/" $CFG_PATH
 fi
 
@@ -27,6 +29,13 @@ if [ `ls -a /var/lib/fahclient | sed -e "/\.$/d" | wc -l` = 0 ]; then
 else 
   echo "Volume is not empty, considering it to be correct"
 fi
+
+echo "# Change volume rights"
+chown -R fahclient:root /var/lib/fahclient
+
+echo "# Prepare logs"
+rm -f /var/lib/fahclient/log.txt 
+touch /var/lib/fahclient/log.txt 
 
 echo "# Launch application"
 /etc/init.d/FAHClient start

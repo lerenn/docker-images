@@ -11,7 +11,7 @@ COPY docker /docker
 RUN cp -r /var/lib/fahclient /docker/fahclient
 
 # Volumes
-VOLUME /var/lib/fahclient
+# VOLUME /var/lib/fahclient
 
 # Environment variables
 ENV USERNAME Anonymous
