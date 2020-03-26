@@ -42,7 +42,7 @@ chown -R fahclient:root $DATA_PATH
 # Launch 
 ###############################################################################
 
-echo "# Launch application"
+echo "# Launch application (Warning: Fail != Failed)"
 /etc/init.d/FAHClient start
 
 echo "# Monitor logs"
