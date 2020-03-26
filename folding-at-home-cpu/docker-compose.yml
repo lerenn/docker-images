@@ -1,6 +1,7 @@
 folding-at-home-cpu:
     build: .
     environment:
+        - USERNAME=toto
         - POWER=light
         # - PASSKEY=test
     ports:

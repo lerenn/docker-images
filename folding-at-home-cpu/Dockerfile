@@ -7,11 +7,8 @@ RUN dnf install -y https://download.foldingathome.org/releases/public/release/fa
 # Copy data
 COPY docker /docker
 
-# Copy /var/lib/fahclient to have the content for the volume
-RUN cp -r /var/lib/fahclient /docker/fahclient
-
 # Volumes
-# VOLUME /var/lib/fahclient
+VOLUME /var/lib/fahclient
 
 # Environment variables
 ENV USERNAME Anonymous

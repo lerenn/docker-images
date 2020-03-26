@@ -1,6 +1,10 @@
 #!/bin/bash
 
 CFG_PATH=/etc/fahclient/config.xml
+DATA_PATH=/var/lib/fahclient
+
+# Configuration
+###############################################################################
 
 echo "# Copy configuration"
 cp -f /docker/config/config.xml $CFG_PATH
@@ -20,25 +24,26 @@ else
 fi
 
 echo "# Change configuration rights"
-chown fahclient:root $CFG_PATH
+chown fahclient:root $CFG_PATH 
 
-echo "# Check if the /var/lib/fahclient volume is empty"
-if [ `ls -a /var/lib/fahclient | sed -e "/\.$/d" | wc -l` = 0 ]; then
-  echo "Copy original content to volume"
-  cp -r /docker/fahclient/* /var/lib/fahclient
-else 
-  echo "Volume is not empty, considering it to be correct"
-fi
+# Logs 
+###############################################################################
+
+echo "# Remove old logs"
+rm $DATA_PATH/log.txt
+touch $DATA_PATH/log.txt
+
+# Volume
+###############################################################################
 
 echo "# Change volume rights"
-chown -R fahclient:root /var/lib/fahclient
+chown -R fahclient:root $DATA_PATH
 
-echo "# Prepare logs"
-rm -f /var/lib/fahclient/log.txt 
-touch /var/lib/fahclient/log.txt 
+# Launch 
+###############################################################################
 
 echo "# Launch application"
 /etc/init.d/FAHClient start
 
 echo "# Monitor logs"
-tail -f /var/lib/fahclient/log.txt
+tail -f $DATA_PATH/log.txt
